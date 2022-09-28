@@ -9,7 +9,7 @@ const getProducts = async (): Promise<Product []> => {
       .from("products")
       .select("id, title,description,price,category, image, boost")
 
-      .eq("userId", "a90c2200-e86f-4654-8aad-a342e5d31b63");
+      .eq("userId", "329fd310-d492-43ea-a85a-3d92df8ceafd");
 
     // .order("id", { ascending: false });
 
