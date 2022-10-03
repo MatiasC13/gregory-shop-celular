@@ -11,7 +11,6 @@ import emailTempate from "utils/emailTemplate";
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   if (req.body.data?.id) {
     const order = req.body.data.id;
-
     const data = await obtenerDatos(order);
 
     const [user, items, transaction_amount, status] = data;
@@ -20,11 +19,11 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     const mailData = {
       from: {
         name: `${process.env.BUSINESS_NAME}`,
-        address: "servicio.notificaciones.compras@gmail.com",
+        address: ownerEmail,
       },
       replyTo: ownerEmail,
       to: email,
-      bcc: [ownerEmail, "servicio.notificaciones.compras@gmail.com"],
+      bcc: [ownerEmail],
       subject: `Order number: ${order} `,
 
       html: emailTempate(
