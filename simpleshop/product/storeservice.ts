@@ -1,23 +1,18 @@
+import { db } from "../firebase/credentials";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import Product from "interfaces/Product";
-import { supabase } from "../client/supabase";
 
-const getProducts = async (): Promise<Product []> => {
-  // const user = supabase.auth.user();
+const getProducts = async (): Promise<Product[]> => {
+  let products = [];
 
   try {
-    const { error, data } = await supabase
-      .from("products")
-      .select("id, title,description,price,category, image, boost")
-
-      .eq("userId", "329fd310-d492-43ea-a85a-3d92df8ceafd");
-
-    // .order("id", { ascending: false });
-
-    if (error) {
-      throw error;
-    }
-    console.log("data: ", data);
-    return data;
+    const q = query(
+      collection(db, "products"),
+      where("user", "==", "gegorycelularcelular@gmail.com")
+    );
+    const snapshot = await getDocs(q);
+    products = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    return products;
   } catch (error) {
     // alert(error.error_description || error.message);
   }
