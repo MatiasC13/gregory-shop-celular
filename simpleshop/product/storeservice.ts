@@ -1,20 +1,24 @@
-import { db } from "../firebase/credentials";
-import { collection, getDocs, query, where } from "firebase/firestore";
+
 import Product from "interfaces/Product";
+import { urlBase } from "utils/helper";
+
+import {ownerEmail} from "utils/ownerData"
 
 const getProducts = async (): Promise<Product[]> => {
-  let products = [];
+
 
   try {
-    const q = query(
-      collection(db, "products"),
-      where("user", "==", "gegorycelularcelular@gmail.com")
+    const response = await fetch(
+      urlBase + ownerEmail 
     );
-    const snapshot = await getDocs(q);
-    products = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    return products;
+    const data = await response.json();
+
+
+    // console.log(data);
+    return data.data
+
   } catch (error) {
-    // alert(error.error_description || error.message);
+    alert(error.error_description || error.message);
   }
 };
 
