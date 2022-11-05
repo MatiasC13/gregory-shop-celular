@@ -19,45 +19,37 @@ interface props{
 
 const SwiperImage = ({title, image}:props) => {
   return (
-      <Swiper
-        loop={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: true,
-        }}
-        freeMode={true}
-        modules={[Autoplay]}
-        className="mySwiper"
-      >
+    <Swiper
+      loop={image.length > 1 ? true : false}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: true,
+      }}
+      freeMode={true}
+      modules={[Autoplay]}
+      className="mySwiper"
+    >
+      {image &&
+        image.map((i, key) => (
+          <SwiperSlide key={key}>
+            <Image
+              unoptimized
+              placeholder="blur"
+              blurDataURL={rgbDataURL(customColor)}
+              // style={style}
+              src={i}
+              alt={title}
+              // src={product.image}
 
-
-{image &&
-  image.map((i ,key)=>(
-    <SwiperSlide key={key}>
-      <Image
-        unoptimized
-        placeholder="blur"
-        blurDataURL={rgbDataURL(customColor)}
-        // style={style}
-        src={i}
-        alt={title}
-        // src={product.image}
-
-        width={128}
-        height={128}
-        objectFit={"cover"}
-        layout={"responsive"}
-      // onClick={() => setSelectedProduct(product)}
-      />
-    </SwiperSlide>
-
-
-
-
-  ))
-}
-
-      </Swiper>
+              width={128}
+              height={128}
+              objectFit={"cover"}
+              layout={"responsive"}
+              // onClick={() => setSelectedProduct(product)}
+            />
+          </SwiperSlide>
+        ))}
+    </Swiper>
   );
 };
 
